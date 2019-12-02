@@ -12,13 +12,20 @@
 <body>
   <div class="page">
     <h1>Buscador de series</h1>
-    <form method="POST" action="">
+    <form method="POST" action="" id="form">
       <input type="text" id="input-search" placeholder="Introduce el nombre de la serie">
       <button type="button" id="btn-search">Buscar</button>
     </form>
     <main id="main" class="main">
-      <ul id="list" class="list">
-      </ul>
+      <section class="list-favourites">
+        <h2>Mis series favoritas:</h2>
+        <ul id="fav-list"></ul>
+      </section>
+      <section class="list-results">
+        <h2>Tu busqueda:</h2>
+        <ul id="list" class="results">
+        </ul>
+      </section>
     </main>
   </div>
   <script src="./assets/js/main.js"></script>

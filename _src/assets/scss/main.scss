@@ -1,0 +1,24 @@
+ul{
+    list-style: none;
+}
+main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.list-favourites{
+    width: 50%;
+    margin-right: 50px;
+}
+.list-results{
+    width: 50%;
+}
+
+.list{
+    background-color:crimson ;
+    color: black;
+}
+.favourites{
+    background-color: rosybrown;
+    color: rgb(73, 36, 10);
+}
