@@ -16,7 +16,6 @@ function conectApi() {
         .then(response => response.json())
         .then(data => {
             paintResults(data);
-            console.log(data);
         })
 };
 
@@ -81,22 +80,23 @@ function paintInitialFavList(favShows) {
         paintFavShows(show);
     };
 };
+
 function paintFavShows(show) {
     const elementLiFav = document.createElement('li');
     const elementImageFav = document.createElement('img');
     const elementSpanFav = document.createElement('span');
     const elementTitleFav = document.createTextNode(show.name);
-    const elementSpanDelete = document.createElement('button');
+    const elementDeleteBtn = document.createElement('button');
     const elementDeleteArrow = document.createTextNode('X');
     elementImageFav.src = show.img;
     favList.appendChild(elementLiFav);
     elementLiFav.appendChild(elementImageFav);
     elementLiFav.appendChild(elementSpanFav);
-    elementLiFav.appendChild(elementSpanDelete);
+    elementLiFav.appendChild(elementDeleteBtn);
     elementSpanFav.appendChild(elementTitleFav);
-    elementSpanDelete.appendChild(elementDeleteArrow);
+    elementDeleteBtn.appendChild(elementDeleteArrow);
 
-    elementSpanDelete.addEventListener('click', deleteFavShows);
+    elementDeleteBtn.addEventListener('click', deleteFavShows);
 };
 
 function submitHandler(event) {
@@ -117,5 +117,4 @@ resetButton.addEventListener('click', resetFavList);
 function deleteFavShows(event) {
     const deletedLi = event.currentTarget.closest('li')
     deletedLi.classList.add('hidden');
-
-}
+};

@@ -9,6 +9,7 @@ main{
 .list-favourites{
     width: 50%;
     margin-right: 50px;
+    
 }
 .list-results{
     width: 50%;
@@ -24,4 +25,18 @@ main{
 }
 .hidden{
     display: none;
+}
+span{
+    padding: 20px;
+    text-align: center;
+}
+li{
+    display: flex;
+    flex-direction: column;
+    font-size: 24px;
+    margin: 30px;
+}
+img{
+    width: 60%;
+    align-self: center;
 }
