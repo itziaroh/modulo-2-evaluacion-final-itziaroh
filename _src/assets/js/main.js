@@ -44,15 +44,17 @@ function paintResults(data) {
             } else {
                 elementImage.src = defaultImage;
             };
-
+            elementLi.addEventListener('click', favShowToggle);
             elementLi.addEventListener('click', chooseFavouritesShows);
         };
     };
 };
 
-function chooseFavouritesShows(event) {
+function favShowToggle(event) {
     event.currentTarget.classList.toggle('favourites');
+};
 
+function chooseFavouritesShows(event) {
     const favShowName = event.currentTarget.querySelector('span');
     const favShowImage = event.currentTarget.querySelector('img');
 
@@ -84,13 +86,17 @@ function paintFavShows(show) {
     const elementImageFav = document.createElement('img');
     const elementSpanFav = document.createElement('span');
     const elementTitleFav = document.createTextNode(show.name);
+    const elementSpanDelete = document.createElement('button');
+    const elementDeleteArrow = document.createTextNode('X');
     elementImageFav.src = show.img;
     favList.appendChild(elementLiFav);
     elementLiFav.appendChild(elementImageFav);
     elementLiFav.appendChild(elementSpanFav);
+    elementLiFav.appendChild(elementSpanDelete);
     elementSpanFav.appendChild(elementTitleFav);
-    elementLiFav.classList.add('favourites');
-    elementLiFav.addEventListener('click', deleteFavShows);
+    elementSpanDelete.appendChild(elementDeleteArrow);
+
+    elementSpanDelete.addEventListener('click', deleteFavShows);
 };
 
 function submitHandler(event) {
@@ -98,17 +104,18 @@ function submitHandler(event) {
     conectApi();
 };
 
-searchButton.addEventListener('click', conectApi);
-elementForm.addEventListener('submit', submitHandler);
-window.addEventListener('load', init);
-
-function deleteFavShows(event) {
-    event.currentTarget.localStorage.removeItem('favourites');
-};
-
 function resetFavList() {
     localStorage.clear('favourites');
     favList.innerHTML = '';
 };
 
+window.addEventListener('load', init);
+searchButton.addEventListener('click', conectApi);
+elementForm.addEventListener('submit', submitHandler);
 resetButton.addEventListener('click', resetFavList);
+
+function deleteFavShows(event) {
+    const deletedLi = event.currentTarget.closest('li')
+    deletedLi.classList.add('hidden');
+
+}
