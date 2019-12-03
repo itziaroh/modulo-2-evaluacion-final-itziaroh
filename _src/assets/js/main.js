@@ -7,6 +7,7 @@ const elementList = document.querySelector('#list');
 const urlBase = 'http://api.tvmaze.com/search/shows?q=';
 const inputValue = searchInput.value.toLowerCase();
 const favList = document.querySelector('#fav-list');
+const resetButton = document.querySelector('#btn-reset');
 let favShows = [];
 
 function conectApi() {
@@ -45,7 +46,7 @@ function paintResults(data) {
             };
 
             elementLi.addEventListener('click', chooseFavouritesShows);
-        }
+        };
     };
 };
 
@@ -58,26 +59,26 @@ function chooseFavouritesShows(event) {
     const favObject = {
         name: favShowName.innerHTML,
         img: favShowImage.src
-    }
+    };
     favShows.push(favObject);
     localStorage.setItem('favourites', JSON.stringify(favShows));
 
     paintFavShows(favObject);
-}
+};
 
 function init() {
     const myLocalStorage = localStorage.getItem('favourites');
     if (myLocalStorage !== null) {
         favShows = JSON.parse(myLocalStorage);
-    }
+    };
     paintInitialFavList(favShows);
-}
+};
 
 function paintInitialFavList(favShows) {
     for (const show of favShows) {
         paintFavShows(show);
-    }
-}
+    };
+};
 function paintFavShows(show) {
     const elementLiFav = document.createElement('li');
     const elementImageFav = document.createElement('img');
@@ -89,13 +90,25 @@ function paintFavShows(show) {
     elementLiFav.appendChild(elementSpanFav);
     elementSpanFav.appendChild(elementTitleFav);
     elementLiFav.classList.add('favourites');
-}
+    elementLiFav.addEventListener('click', deleteFavShows);
+};
 
 function submitHandler(event) {
     event.preventDefault();
     conectApi();
-}
+};
 
 searchButton.addEventListener('click', conectApi);
 elementForm.addEventListener('submit', submitHandler);
 window.addEventListener('load', init);
+
+function deleteFavShows(event) {
+    event.currentTarget.localStorage.removeItem('favourites');
+};
+
+function resetFavList() {
+    localStorage.clear('favourites');
+    favList.innerHTML = '';
+};
+
+resetButton.addEventListener('click', resetFavList);
