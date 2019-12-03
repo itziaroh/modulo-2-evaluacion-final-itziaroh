@@ -6,8 +6,8 @@ const searchButton = document.querySelector('#btn-search');
 const elementList = document.querySelector('#list');
 const urlBase = 'http://api.tvmaze.com/search/shows?q=';
 const inputValue = searchInput.value.toLowerCase();
-const favouritesList = document.querySelector('#fav-list');
-let favouriteShows = [];
+const favList = document.querySelector('#fav-list');
+let favShows = [];
 
 function conectApi() {
     const inputValue = searchInput.value.toLowerCase();
@@ -55,15 +55,41 @@ function chooseFavouritesShows(event) {
     const favShowName = event.currentTarget.querySelector('span');
     const favShowImage = event.currentTarget.querySelector('img');
 
-    const favouriteObject = {
+    const favObject = {
         name: favShowName.innerHTML,
         img: favShowImage.src
     }
+    favShows.push(favObject);
+    localStorage.setItem('favourites', JSON.stringify(favShows));
 
-    favouriteShows.push(favouriteObject);
-    localStorage.setItem('favourites', JSON.stringify(favouriteShows));
+    paintFavShows(favObject);
 }
 
+function init() {
+    const myLocalStorage = localStorage.getItem('favourites');
+    if (myLocalStorage !== null) {
+        favShows = JSON.parse(myLocalStorage);
+    }
+    paintInitialFavList(favShows);
+}
+
+function paintInitialFavList(favShows) {
+    for (const show of favShows) {
+        paintFavShows(show);
+    }
+}
+function paintFavShows(show) {
+    const elementLiFav = document.createElement('li');
+    const elementImageFav = document.createElement('img');
+    const elementSpanFav = document.createElement('span');
+    const elementTitleFav = document.createTextNode(show.name);
+    elementImageFav.src = show.img;
+    favList.appendChild(elementLiFav);
+    elementLiFav.appendChild(elementImageFav);
+    elementLiFav.appendChild(elementSpanFav);
+    elementSpanFav.appendChild(elementTitleFav);
+    elementLiFav.classList.add('favourites');
+}
 
 function submitHandler(event) {
     event.preventDefault();
@@ -72,4 +98,4 @@ function submitHandler(event) {
 
 searchButton.addEventListener('click', conectApi);
 elementForm.addEventListener('submit', submitHandler);
-// window.addEventListener('load', loadFavouriteShows);
+window.addEventListener('load', init);
