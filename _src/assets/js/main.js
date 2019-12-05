@@ -15,7 +15,9 @@ function conectApi() {
     fetch(urlBase + inputValue)
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             paintResults(data);
+
         })
 };
 
@@ -29,12 +31,21 @@ function paintResults(data) {
             const elementImage = document.createElement('img');
             const elementSpan = document.createElement('span');
 
+
             const elementTitle = document.createTextNode(serie.show.name);
+            const schedule = serie.show.schedule.days;
+            for (const day of schedule) {
+                const scheduleSpan = document.createElement('p');
+                elementLi.appendChild(scheduleSpan);
+                const scheduleDay = document.createTextNode(day)
+                scheduleSpan.appendChild(scheduleDay);
+            }
 
             elementList.appendChild(elementLi);
             elementLi.appendChild(elementImage);
             elementLi.appendChild(elementSpan);
             elementSpan.appendChild(elementTitle);
+
 
             elementLi.classList.add('list');
 
@@ -81,6 +92,11 @@ function paintInitialFavList(favShows) {
     };
 };
 
+function showFavName(event) {
+    const favName = event.currentTarget.childNodes[1].innerHTML;
+    console.log(favName)
+}
+
 function paintFavShows(show) {
     const elementLiFav = document.createElement('li');
     const elementImageFav = document.createElement('img');
@@ -96,6 +112,7 @@ function paintFavShows(show) {
     elementSpanFav.appendChild(elementTitleFav);
     elementDeleteBtn.appendChild(elementDeleteArrow);
 
+    elementLiFav.addEventListener('click', showFavName);
     elementDeleteBtn.addEventListener('click', deleteFavShows);
 };
 
